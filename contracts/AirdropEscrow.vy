@@ -43,7 +43,7 @@ user_token_cursor_t: public(map(address, map(address, int128)))  # user -> token
 
 integral_inv_supply: public(uint256[10000000000000000])
 user_balances: public(map(address, uint256[10000000000000000]))
-cumulative_token_of: public(map(address, map(address, uint256))) # TODO
+claimed_token_of: public(map(address, map(address, uint256)))
 
 
 @public
@@ -307,6 +307,11 @@ def claim(_token: address):
     # Save state
     self.user_token_cursor_t[msg.sender][_token] = cursor_t
     self.user_token_cursor_u[msg.sender][_token] = cursor_u
+
+    # Transfer tokens
+    if earned > 0:
+        self.claimed_token_of[msg.sender][_token] += earned
+        ERC20(_token).transfer(msg.sender, earned)
 
 
 @public
