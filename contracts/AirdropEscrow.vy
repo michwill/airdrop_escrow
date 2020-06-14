@@ -345,3 +345,8 @@ def remove_token(i: int128):
     self.airdropped_tokens[i] = self.airdropped_tokens[n]
     self.airdropped_tokens[n] = ZERO_ADDRESS
     self.n_tokens = n
+
+
+# XXX TODO claim from the pool (everyone can)
+# XXX TODO calculate claim amount without executing
+# XXX TODO tests
